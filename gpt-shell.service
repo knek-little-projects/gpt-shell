@@ -1,0 +1,15 @@
+[Unit]
+Description=GPT Shell Server
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/test/gpt-shell
+ExecStart=/usr/bin/python3 run_server.py run --base=/home/test/gpt-shell --key=qwe
+Restart=on-failure
+User=test
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
+

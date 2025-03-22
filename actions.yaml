@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: GPT Shell & File API
+  version: 1.0.0
+  description: Execute shell commands, read and write files. Requires X-Api-Key header for authorization.
+servers:
+  - url: https://my-test-server.ru
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+  schemas: {}
+security:
+  - ApiKeyAuth: []
+paths:
+  /run-command:
+    post:
+      x-openai-isConsequential: false
+      summary: Run a shell command
+      operationId: runShellCommand
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                command:
+                  type: string
+                  description: Shell command to execute
+              required:
+                - command
+      responses:
+        "200":
+          description: Shell command result
+          content:
+            application/xml:
+              schema:
+                type: string
+  /write-file:
+    post:
+      x-openai-isConsequential: false
+      summary: Overwrite a file
+      operationId: writeFile
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                  description: File path
+                content:
+                  type: string
+                  description: New file content
+              required:
+                - path
+                - content
+      responses:
+        "200":
+          description: File write result
+          content:
+            application/xml:
+              schema:
+                type: string
+  /read-file:
+    post:
+      x-openai-isConsequential: false
+      summary: Read a file
+      operationId: readFile
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path:
+                  type: string
+                  description: File path
+              required:
+                - path
+      responses:
+        "200":
+          description: File read result
+          content:
+            application/xml:
+              schema:
+                type: string
